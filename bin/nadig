@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for i in $(dig +noall +additional NS na.drillinginfo.com | awk '{print $5}' | sort -t '.' -k1,1n -k2,2n -k3,3n -k4,4n);
+    do echo "$i: "; dig @$i +noall +answer "$@"
+done
+

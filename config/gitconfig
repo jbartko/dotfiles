@@ -1,0 +1,10 @@
+# Set your name and email with the following:
+#   git config -f ~/.gitconfig.local user.name John Appleseed
+#   git config -f ~/.gitconfig.local user.email me@example.com
+
+[alias]
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[color]
+  ui = auto
+[include]
+  path = .gitconfig.local

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# nscheck                                                    --- VERSION 1.0 ---
+#   dig wrapper script to quickly query internal and external DNS views
+
+NAMESERVERS=( 10.8.2.140 8.8.8.8 )
+
+DIG=/usr/bin/dig
+DIGOPTS='+noall +answer '
+SED=/bin/sed
+
+usage() {
+    /bin/cat << 'EOUSAGE'
+    nscheck - dig wrapper for querying internal and external DNS views
+
+    Usage:
+        nscheck HOSTNAME
+        nscheck -x IP_ADDRESS
+EOUSAGE
+}
+
+do_nscheck() {
+    for server in "${NAMESERVERS[@]}"; do
+        $SED -e :a -e 's/^.\{1,79\}$/&-/;ta' <<<"--- [ $server ] "
+        $DIG @$server $DIGOPTS $@ | column -t
+        echo
+    done;
+}
+
+while getopts "hx" OPT; do
+    case $OPT in
+        x) DIGOPTS="${DIGOPTS}-x ";;
+        h|*) usage
+            exit 2;;
+    esac
+done
+shift $((OPTIND-1))
+
+[ "$#" -lt 1 ] && usage && exit 1
+
+do_nscheck $@
+
+# vim: set ts=4 sw=4 et syn=sh:
