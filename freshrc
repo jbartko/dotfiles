@@ -9,6 +9,7 @@
 # See http://freshshell.com/readme for documentation.
 
 fresh freshshell/fresh bin/fresh --bin
+fresh https://git.drillinginfo.com/john-bartko/dotfiles.git bash/\*
 fresh https://git.drillinginfo.com/john-bartko/dotfiles.git bin --bin
 fresh https://git.drillinginfo.com/john-bartko/dotfiles.git config/gitconfig --file
 fresh https://git.drillinginfo.com/john-bartko/dotfiles.git config/tmux.conf --file

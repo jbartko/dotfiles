@@ -1,0 +1,8 @@
+{
+  "bartko_wants": {
+    "docker": true
+  },
+  "run_list":[
+    "recipe[bartko_wants]"
+  ]
+}

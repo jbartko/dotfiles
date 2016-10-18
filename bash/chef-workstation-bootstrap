@@ -1,0 +1,27 @@
+chef-workstation-bootstrap() {
+    local OPTIND OPT chefdk_version attrs_file
+    while getopts ":hv:j:" OPT; do
+        case "${OPT}" in
+            v)
+                chefdk_version="-v ${OPTARG}"
+                ;;
+            j)
+                attrs_file="-j ${OPTARG}"
+                ;;
+            h|*)
+                echo "chef-workstation-bootstrap: [-v ChefDK version] [-j attributes JSON file]" 1>&2
+                return
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    sudo ls >/dev/null
+    curl -s https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk ${chefdk_version}
+    eval "$(chef shell-init bash)"
+    pushd ~/dotfiles/chef
+    berks vendor ./cookbooks
+    popd
+    [ -z "$attrs_file" ] && attrs_file="-r bartko_wants"
+    sudo chef-client --config-option chef_repo_path=~/dotfiles/chef/ -z ${attrs_file}
+}
