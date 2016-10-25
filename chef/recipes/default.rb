@@ -19,6 +19,7 @@ package %w{
   strace
   tcpdump
   telnet
+  tmux
   vim-enhanced
 }
 

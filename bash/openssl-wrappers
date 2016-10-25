@@ -1,0 +1,48 @@
+# get SSH key fingerprint from private key
+awskeycomp() {
+    openssl pkey -in $1 -pubout -outform DER | openssl md5 -c
+}
+
+# check the validity of a TLS terminated endpoint
+sslcheck() {
+    echo "PROTOCOL & CIPHER:"
+    echo | openssl s_client -connect $@ 2>/dev/null | grep '^[[:space:]]*Protocol\|^[[:space:]]*Cipher' | sed 's/^ */   /g'
+    echo
+    echo "CERTICATE CHAIN:"
+    echo | openssl s_client -connect $@ 2>/dev/null | grep ' s:\| i:'
+    echo
+    echo "SUBJECT ALTERNATE NAMES:"
+    echo | openssl s_client -connect $@ 2>/dev/null | openssl x509 -noout -text | grep DNS | sed 's/^ */   /g'
+    echo
+    echo "EXPIRY:"
+    echo | openssl s_client -connect $@ 2>/dev/null | openssl x509 -noout -dates | sed 's/^/   /g'
+    echo
+    echo "VALIDATION METHOD:"
+    (echo | openssl s_client -connect $@ -showcerts 2>/dev/null | openssl x509 -noout -text | grep 'Policy' -A1 | tr '\n' '#' | sed 's/ \+/ /g';echo) | column -t -s '#' | sed 's/^ */   /g'
+    echo
+    echo "VERIFY:"
+    echo | openssl s_client -CApath /etc/ssl/certs -connect $@ 2>/dev/null | grep Verify | sed 's/^ */   /g'
+}
+
+# compare a certificate, signing request, and a private key
+sslcomp() {
+    [ -r $1.crt ] && (echo -n "CRT: "; openssl x509 -noout -modulus -in $1.crt | openssl md5) || echo NO CRT for $1
+    [ -r $1.csr ] && (echo -n "CSR: "; openssl req -noout -modulus -in $1.csr | openssl md5)  || echo NO CSR for $1
+    [ -r $1.key ] && (echo -n "KEY: "; openssl rsa -noout -modulus -in $1.key | openssl md5) || echo NO KEY for $1
+}
+
+# generate a new private key and signing request
+sslgen() {
+    openssl req -out $1-$(date +%Y%m%d).csr -new -newkey rsa:2048 -nodes -subj '/C=US/ST=Texas/L=Austin/O=Drilling Info, Inc./OU=Information Technology/CN=*.drillinginfo.com' -keyout $1-$(date +%Y%m%d).key
+}
+
+# convert PKCS8INF -> RSA/PKCS1
+sslkey2rsa() {
+    openssl rsa -in $1
+}
+
+# decode a certificate file
+alias sslviewcrt='openssl x509 -noout -text -in'
+
+# decode a certificate signing request file
+alias sslviewcsr='openssl req -noout -text -in'
