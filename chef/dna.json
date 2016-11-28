@@ -1,6 +1,7 @@
 {
   "bartko_wants": {
-    "docker": true
+    "docker": true,
+    "plex": true
   },
   "run_list":[
     "recipe[bartko_wants]"

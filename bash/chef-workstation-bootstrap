@@ -23,5 +23,5 @@ chef-workstation-bootstrap() {
     berks vendor ./cookbooks
     popd
     [ -z "$attrs_file" ] && attrs_file="-r bartko_wants"
-    sudo chef-client --config-option chef_repo_path=~/dotfiles/chef/ -z ${attrs_file}
+    sudo chef-client --config-option chef_repo_path=~/.dotfiles/chef/ -z ${attrs_file}
 }

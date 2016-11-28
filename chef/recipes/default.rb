@@ -24,3 +24,4 @@ package %w{
 }
 
 include_recipe 'bartko_wants::docker' if node['bartko_wants']['docker']
+include_recipe 'bartko_wants::plex' if node['bartko_wants']['plex']
