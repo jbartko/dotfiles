@@ -1,7 +1,8 @@
 consul_curl() {
-  local OPTIND OPT consul_endpoint consul_servicename service_path consul_dnsrr consul_nodename service_port
+  local OPTIND OPT consul_endpoint consul_servicename service_path \
+    consul_datacenter consul_dnsrr consul_nodename service_port consul_zone
 
-  while getopts ":hc:n:p:" OPT; do
+  while getopts ":hc:n:p:d:" OPT; do
       case "${OPT}" in
           c)
               consul_endpoint="${OPTARG}"
@@ -12,18 +13,22 @@ consul_curl() {
           p)
               service_path="${OPTARG}"
               ;;
+          d)
+              consul_datacenter="${OPTARG}."
+              ;;
           h|*)
-              echo "consul_curl -c CONSUL_ENDPOINT -n SERVICE_NAME -p PATH [-- additional curl options]" 1>&2
+              echo "consul_curl -c CONSUL_ENDPOINT -n SERVICE_NAME -p PATH [-d CONSUL_DC] [-- additional curl options]" 1>&2
               return
               ;;
       esac
   done
   shift $((OPTIND-1))
 
-  consul_dnsrr=$(dig @${consul_endpoint} +noall +short SRV ${consul_servicename}.service.consul | head -1)
+  consul_zone=".service.${consul_datacenter}consul"
+  consul_dnsrr=$(dig @${consul_endpoint} +noall +short SRV ${consul_servicename}${consul_zone} | head -1)
   consul_nodename=$(echo ${consul_dnsrr} | awk '{print $4}')
   consul_nodeip=$(dig @${consul_endpoint} +noall +short ${consul_nodename})
   service_port=$(echo ${consul_dnsrr} | awk '{print $3}')
 
-  curl -s -H "Host: ${consul_servicename}.service.consul" "http://${consul_nodeip}:${service_port}${service_path}" "$@"
+  curl -s -H "Host: ${consul_servicename}${consul_zone}" "http://${consul_nodeip}:${service_port}${service_path}" "$@"
 }
