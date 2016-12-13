@@ -1,0 +1,29 @@
+consul_curl() {
+  local OPTIND OPT consul_endpoint consul_servicename service_path consul_dnsrr consul_nodename service_port
+
+  while getopts ":hc:n:p:" OPT; do
+      case "${OPT}" in
+          c)
+              consul_endpoint="${OPTARG}"
+              ;;
+          n)
+              consul_servicename="${OPTARG}"
+              ;;
+          p)
+              service_path="${OPTARG}"
+              ;;
+          h|*)
+              echo "consul_curl -c CONSUL_ENDPOINT -n SERVICE_NAME -p PATH [-- additional curl options]" 1>&2
+              return
+              ;;
+      esac
+  done
+  shift $((OPTIND-1))
+
+  consul_dnsrr=$(dig @${consul_endpoint} +noall +short SRV ${consul_servicename}.service.consul | head -1)
+  consul_nodename=$(echo ${consul_dnsrr} | awk '{print $4}')
+  consul_nodeip=$(dig @${consul_endpoint} +noall +short ${consul_nodename})
+  service_port=$(echo ${consul_dnsrr} | awk '{print $3}')
+
+  curl -s -H "Host: ${consul_servicename}.service.consul" "http://${consul_nodeip}:${service_port}${service_path}" "$@"
+}
