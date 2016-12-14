@@ -1,4 +1,9 @@
 consul_curl() {
+  local HELP='consul_curl -c CONSUL_ENDPOINT -n SERVICE_NAME -p PATH'
+  HELP+=' [-d CONSUL_DC] [-- additional curl options]'
+
+  [ $# -lt 6 ] && echo $HELP 1>&2 && return 1
+
   local OPTIND OPT consul_endpoint consul_servicename service_path \
     consul_datacenter consul_dnsrr consul_nodename service_port consul_zone
 
@@ -16,9 +21,19 @@ consul_curl() {
           d)
               consul_datacenter="${OPTARG}."
               ;;
+          \?)
+              echo "Invalid option: -$OPTARG" 1>&2
+              echo $HELP 1>&2
+              return 1
+              ;;
+          :)
+              echo "Option -$OPTARG requires an argument." 1>&2
+              echo $HELP 1>&2
+              return 1
+              ;;
           h|*)
-              echo "consul_curl -c CONSUL_ENDPOINT -n SERVICE_NAME -p PATH [-d CONSUL_DC] [-- additional curl options]" 1>&2
-              return
+              echo $HELP 1>&2
+              return 1
               ;;
       esac
   done
