@@ -1,5 +1,12 @@
 # [fresh](https://freshshell.com/) ~/.dotfiles
 
+## Why hello there
+You're probably here for [OpenSSL wrappers](bash/openssl-wrappers) or [Consul curl wrappers](bash/consul_curl). Add something like the following to your own `freshrc`:
+
+```
+fresh https://git.drillinginfo.com/john-bartko/dotfiles.git bash/consul_curl
+```
+
 ## Installation
 ``` sh
 FRESH_LOCAL_SOURCE=https://git.drillinginfo.com/john-bartko/dotfiles.git bash -c "`curl -sL get.freshshell.com`"
