@@ -1,11 +1,11 @@
 directory '/opt/plex'
 directory '/opt/plex/config' do
-  user 1000
-  group 1000
+  user ENV['SUDO_UID']
+  group ENV['SUDO_GID']
 end
 directory '/opt/plex/transcode' do
-  user 1000
-  group 1000
+  user ENV['SUDO_UID']
+  group ENV['SUDO_GID']
 end
 
 include_recipe 'bartko_wants::docker'
@@ -14,8 +14,8 @@ docker_image 'linuxserver/plex'
 
 docker_container 'plex' do
   env [
-    'PGID=1000',
-    'PUID=1000',
+    "PGID=#{ENV['SUDO_UID']}",
+    "PUID=#{ENV['SUDO_GID']}",
     'TZ=America/Chicago',
     'VERSION=latest'
   ]

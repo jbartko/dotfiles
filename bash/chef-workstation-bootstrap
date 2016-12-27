@@ -24,5 +24,5 @@ chef-workstation-bootstrap() {
     popd
     [ -z "$attrs_file" ] && attrs_file="-r bartko_wants"
     sudo chef-client --config-option chef_repo_path=~/.dotfiles/chef/ -z ${attrs_file}
-    rm -rf ~/.dotfiles/chef/cookbooks ~/.dotfiles/chef/nodes
+    sudo rm -rf ~/.dotfiles/chef/cookbooks ~/.dotfiles/chef/nodes
 }
