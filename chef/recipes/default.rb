@@ -16,9 +16,10 @@ package distro_packages + %w{
   google-chrome-stable
   hipchat4
   htop
+  jq
   ncdu
   nmap
-  jq
+  python-pip
   rsync
   strace
   tcpdump
