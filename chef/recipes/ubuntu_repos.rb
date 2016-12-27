@@ -1,5 +1,6 @@
 apt_repository 'atlassian-artifactory' do
-  components ['main', 'xenial']
+  components ['main']
+  distribution node['lsb']['codename']
   key 'https://atlassian.artifactoryonline.com/atlassian/api/gpg/key/public'
   uri 'https://atlassian.artifactoryonline.com/atlassian/hipchat-apt-client'
 end
@@ -10,7 +11,8 @@ end
 
 apt_repository 'google-chrome' do
   arch 'amd64'
-  components ['main', 'stable']
+  components ['main']
+  distribution 'stable'
   key 'https://dl.google.com/linux/linux_signing_key.pub'
   uri 'http://dl.google.com/linux/chrome/deb/'
 end
