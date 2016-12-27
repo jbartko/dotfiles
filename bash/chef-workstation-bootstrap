@@ -19,9 +19,10 @@ chef-workstation-bootstrap() {
     sudo ls >/dev/null
     curl -s https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk ${chefdk_version}
     eval "$(chef shell-init bash)"
-    pushd ~/dotfiles/chef
+    pushd ~/.dotfiles/chef
     berks vendor ./cookbooks
     popd
     [ -z "$attrs_file" ] && attrs_file="-r bartko_wants"
     sudo chef-client --config-option chef_repo_path=~/.dotfiles/chef/ -z ${attrs_file}
+    rm -rf ~/.dotfiles/chef/cookbooks ~/.dotfiles/chef/nodes
 }

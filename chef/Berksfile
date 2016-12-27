@@ -4,4 +4,5 @@ metadata
 
 cookbook 'chef-dk'
 cookbook 'docker'
+cookbook 'poise-python'
 cookbook 'yum'

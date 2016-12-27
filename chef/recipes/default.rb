@@ -23,5 +23,6 @@ package %w{
   vim-enhanced
 }
 
+include_recipe 'bartko_wants::awscli' if node['bartko_wants']['awscli']
 include_recipe 'bartko_wants::docker' if node['bartko_wants']['docker']
 include_recipe 'bartko_wants::plex' if node['bartko_wants']['plex']
