@@ -2,6 +2,7 @@ source 'https://supermarket.chef.io'
 
 metadata
 
+cookbook 'apt'
 cookbook 'chef-dk'
 cookbook 'docker'
 cookbook 'poise-python'
