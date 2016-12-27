@@ -2,7 +2,7 @@ case node['platform_family']
 when 'fedora'
   include_recipe 'yum::dnf_yum_compat'
   include_recipe 'bartko_wants::fedora_repos'
-when 'ubuntu'
+when 'debian'
   include_recipe 'apt'
   include_recipe 'bartko_wants::ubuntu_repos'
 end
