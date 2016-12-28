@@ -1,11 +1,13 @@
+require 'etc'
+
 directory '/opt/plex'
 directory '/opt/plex/config' do
-  user ENV['SUDO_UID']
-  group ENV['SUDO_GID']
+  owner ENV['SUDO_UID'].to_i
+  group ENV['SUDO_GID'].to_i
 end
 directory '/opt/plex/transcode' do
-  user ENV['SUDO_UID']
-  group ENV['SUDO_GID']
+  owner ENV['SUDO_UID'].to_i
+  group ENV['SUDO_GID'].to_i
 end
 
 include_recipe 'bartko_wants::docker'
@@ -26,7 +28,7 @@ docker_container 'plex' do
   volumes [
     '/opt/plex/config:/config',
     '/opt/plex/transcode:/transcode',
-    '/home/jmb/Videos/tv:/data/tvshows',
-    '/home/jmb/Videos/movies:/data/movies'
+    "#{Etc.getpwuid(ENV['SUDO_UID'].to_i).dir}/Videos/tv:/data/tvshows",
+    "#{Etc.getpwuid(ENV['SUDO_UID'].to_i).dir}/Videos/movies:/data/movies"
   ]
 end
