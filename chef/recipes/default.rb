@@ -27,7 +27,6 @@ package distro_packages + %w{
   tcpdump
   telnet
   tmux
-  vim
 }
 
 include_recipe 'bartko_wants::awscli' if node['bartko_wants']['awscli']
