@@ -10,6 +10,8 @@ fresh https://git.drillinginfo.com/john-bartko/dotfiles.git bash/consul_curl
 ## Installation
 ``` sh
 FRESH_LOCAL_SOURCE=https://git.drillinginfo.com/john-bartko/dotfiles.git bash -c "`curl -sL get.freshshell.com`"
+echo 'source ~/.fresh/build/shell.sh' | tee -a ~/.bashrc
+source ~/.bashrc
 ```
 
 ## Full workstation bootstrap
