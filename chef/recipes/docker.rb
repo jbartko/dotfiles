@@ -1,8 +1,8 @@
 if node['platform_family'] == 'fedora' && node['platform_version'].to_i == 25
-  docker_installation_package 'default' do
-    package_name 'docker'
-    version '1.12.5-1.git6009905.fc25'
-    action :create
+  package 'docker'
+
+  service 'docker' do
+    action [:enable, :start]
   end
 else
   docker_service 'default' do
