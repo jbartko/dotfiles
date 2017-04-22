@@ -9,21 +9,33 @@ directory '/opt/plex/transcode' do
   owner ENV['SUDO_UID'].to_i
   group ENV['SUDO_GID'].to_i
 end
+directory "#{Etc.getpwuid(ENV['SUDO_UID'].to_i).dir}/Videos" do
+  owner ENV['SUDO_UID'].to_i
+  group ENV['SUDO_GID'].to_i
+end
+directory "#{Etc.getpwuid(ENV['SUDO_UID'].to_i).dir}/Videos/movies" do
+  owner ENV['SUDO_UID'].to_i
+  group ENV['SUDO_GID'].to_i
+end
+directory "#{Etc.getpwuid(ENV['SUDO_UID'].to_i).dir}/Videos/tv" do
+  owner ENV['SUDO_UID'].to_i
+  group ENV['SUDO_GID'].to_i
+end
 
 include_recipe 'bartko_wants::docker'
 
-docker_image 'linuxserver/plex'
+docker_image 'plexinc/pms-docker'
 
 docker_container 'plex' do
   env [
-    "PGID=#{ENV['SUDO_UID']}",
-    "PUID=#{ENV['SUDO_GID']}",
+    "PLEX_UID=#{ENV['SUDO_UID']}",
+    "PLEX_GID=#{ENV['SUDO_GID']}",
     'TZ=America/Chicago',
     'VERSION=latest'
   ]
   kill_after 60
   network_mode 'host'
-  repo 'linuxserver/plex'
+  repo 'plexinc/pms-docker'
   restart_policy 'always'
   volumes [
     '/opt/plex/config:/config',

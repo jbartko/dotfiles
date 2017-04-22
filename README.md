@@ -18,3 +18,10 @@ source ~/.bashrc
 
 1. Install dotfiles as above
 2. `chef-workstation-bootstrap -j ~/.dotfiles/chef/dna.json`
+
+## Testing
+
+```sh
+chef exec bundle install
+kitchen test -c $(grep -c proc /proc/cpuinfo)
+```

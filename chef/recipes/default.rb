@@ -6,13 +6,12 @@ when 'fedora'
 when 'debian'
   include_recipe 'apt'
   include_recipe 'bartko_wants::ubuntu_repos'
-  distro_packages = ['netcat','vim']
+  distro_packages = ['atom','netcat','vim']
 else
   distro_packages = []
 end
 
 package distro_packages + %w{
-  atom
   atop
   git
   google-chrome-stable

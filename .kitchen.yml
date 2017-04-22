@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+    - [".", "/home/vagrant/.dotfiles"]
+
+provisioner:
+  name: shell
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+  - name: ubuntu-16.10
+  - name: fedora-24
+  - name: fedora-25
+
+suites:
+  - name: default
+    run_list:
+    attributes:
+      yum:
+        main:
+          ip_resolve: 4
+
+transport:
+  name: rsync
+  ssh_key: ~/.vagrant.d/insecure_private_key
+  username: vagrant
+
+verifier:
+  name: inspec
