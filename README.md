@@ -23,5 +23,7 @@ source ~/.bashrc
 
 ```sh
 chef exec bundle install
-kitchen test -c $(grep -c proc /proc/cpuinfo)
+time (kitchen converge -c $(echo $(grep -c proc /proc/cpuinfo)*2 | bc) && \
+    kitchen verify && \
+    kitchen destroy)
 ```
