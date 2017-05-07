@@ -2,7 +2,8 @@
   "bartko_wants": {
     "awscli": true,
     "docker": true,
-    "plex": true
+    "plex": true,
+    "vagrant": true
   },
   "run_list":[
     "recipe[bartko_wants]"

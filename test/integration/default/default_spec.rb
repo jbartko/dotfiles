@@ -101,6 +101,11 @@ control 'Packages' do
     end
   end
 
+  describe package('vagrant') do
+    it { should be_installed }
+    its('version') { should match '1.9.4' }
+  end
+
   describe gem('lastpass-ssh', '/opt/chefdk/embedded/bin/gem') do
     it { should be_installed }
   end
