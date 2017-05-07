@@ -13,6 +13,16 @@ apt_repository 'google-chrome' do
   uri 'http://dl.google.com/linux/chrome/deb/'
 end
 
+apt_repository 'oracle-virtualbox' do
+  arch 'amd64'
+  components ['contrib']
+  distribution node['lsb']['codename']
+  key node['platform_version'].to_f >= 16.04 ?
+    'https://www.virtualbox.org/download/oracle_vbox_2016.asc' :
+    'https://www.virtualbox.org/download/oracle_vbox.asc'
+  uri 'http://download.virtualbox.org/virtualbox/debian/'
+end
+
 apt_repository 'pasi-niemi-lastpass-cli' do
   uri 'ppa:pasi-niemi/lastpass-cli'
 end if node['platform_version'] == '14.04'

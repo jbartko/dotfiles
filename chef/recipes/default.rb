@@ -4,9 +4,11 @@ when 'fedora'
   include_recipe 'bartko_wants::fedora_repos'
   distro_packages = %w{
     gitflow
+    kernel-devel
     NetworkManager-openconnect
     nmap-ncat
     vim-enhanced
+    VirtualBox-5.1
   }
   if node['platform_version'].to_i >= 25
     distro_packages += ['NetworkManager-openconnect-gnome']
@@ -20,6 +22,7 @@ when 'debian'
     netcat
     network-manager-openconnect-gnome
     vim
+    virtualbox-5.1
   }
 else
   distro_packages = []

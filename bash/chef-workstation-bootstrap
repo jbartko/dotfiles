@@ -26,4 +26,5 @@ chef-workstation-bootstrap() {
     [ -z "$attrs_file" ] && attrs_file="-r bartko_wants"
     sudo -E -- chef-client --config-option chef_repo_path=~/.dotfiles/chef/ -z ${attrs_file}
     sudo rm -rf ~/.dotfiles/chef/{Berksfile.lock,cookbooks,nodes}
+    echo 'Consider removing or chowning the ~/.bundle/ ~/.chef/ ~/.chefdk/ directories' 1>&2
 }

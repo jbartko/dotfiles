@@ -75,9 +75,11 @@ control 'Packages' do
   if os[:family] == 'fedora'
     %w{
       gitflow
+      kernel-devel
       NetworkManager-openconnect
       nmap-ncat
       vim-enhanced
+      VirtualBox-5.1
     }.each do |pkg|
       describe package(pkg) do
         it { should be_installed }
@@ -94,6 +96,7 @@ control 'Packages' do
       netcat
       network-manager-openconnect-gnome
       vim
+      virtualbox-5.1
     }.each do |pkg|
       describe package(pkg) do
         it { should be_installed }

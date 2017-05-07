@@ -42,3 +42,12 @@ yum_repository 'google-chrome' do
   gpgcheck true
   gpgkey 'https://dl.google.com/linux/linux_signing_key.pub'
 end
+
+# Oracle VirtualBox
+yum_repository 'oracle-virtualbox' do
+  description 'oracle-virtualbox'
+  baseurl 'http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch'
+  enabled true
+  gpgcheck true
+  gpgkey 'https://www.virtualbox.org/download/oracle_vbox.asc'
+end
