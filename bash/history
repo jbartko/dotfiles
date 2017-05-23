@@ -1,0 +1,15 @@
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+export HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=100000
+export HISTFILESIZE=250000
+# add timestamps to history
+export HISTTIMEFORMAT="%FT%T "
+
+# After each command, save and reload to share history between sessions
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
