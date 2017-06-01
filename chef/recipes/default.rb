@@ -9,6 +9,7 @@ when 'fedora'
     nmap-ncat
     vim-enhanced
     VirtualBox-5.1
+    qt5-qtx11extras
   }
   if node['platform_version'].to_i >= 25
     distro_packages += ['NetworkManager-openconnect-gnome']
