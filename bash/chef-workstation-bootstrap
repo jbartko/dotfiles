@@ -1,12 +1,15 @@
 chef-workstation-bootstrap() {
-    local OPTIND OPT chefdk_version attrs_file
-    while getopts ":hv:j:" OPT; do
+    local OPTIND OPT chefdk_version attrs_file upgrade
+    while getopts ":hv:j:u:" OPT; do
         case "${OPT}" in
             v)
                 chefdk_version="-v ${OPTARG}"
                 ;;
             j)
                 attrs_file="-j ${OPTARG}"
+                ;;
+            u)
+                upgrade=true
                 ;;
             h|*)
                 echo "chef-workstation-bootstrap: [-v ChefDK version] [-j attributes JSON file]" 1>&2
@@ -17,7 +20,7 @@ chef-workstation-bootstrap() {
     shift $((OPTIND-1))
 
     sudo ls >/dev/null
-    [ -d /opt/chefdk ]  || curl -s https://omnitruck.chef.io/install.sh | sudo bash -s -- -c current -P chefdk ${chefdk_version}
+    [ ! -d /opt/chefdk ] || [ -n "$upgrade" ] && curl -s https://omnitruck.chef.io/install.sh | sudo bash -s -- -c stable -P chefdk ${chefdk_version}
     eval "$(chef shell-init bash)"
     grep -q '^eval "$(chef shell-init bash)"$' ~/.bashrc || echo 'eval "$(chef shell-init bash)"' | tee -a ~/.bashrc
     pushd ~/.dotfiles/chef
