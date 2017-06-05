@@ -12,7 +12,7 @@ chef-workstation-bootstrap() {
                 upgrade=true
                 ;;
             h|*)
-                echo "chef-workstation-bootstrap: [-v ChefDK version] [-j attributes JSON file]" 1>&2
+                echo "chef-workstation-bootstrap: [-v ChefDK version]|[-u] [-j attributes JSON file]" 1>&2
                 return
                 ;;
         esac

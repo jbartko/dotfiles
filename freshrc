@@ -15,3 +15,4 @@ fresh config/gitconfig --file
 fresh bobthecow/git-flow-completion git-flow-completion.bash
 fresh config/tmux.conf --file
 fresh git://git.drillinginfo.com/ITAppSupport/.tmux.d.git . --file=~/.tmux.d/
+fresh https://github.com/jbartko/multi_chef.git . --file=~/multi_chef/
