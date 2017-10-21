@@ -3,6 +3,7 @@
     "awscli": true,
     "docker": true,
     "plex": true,
+    "terraform": true,
     "vagrant": true
   },
   "run_list":[

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# nscheck
+#   dig wrapper script to query all domain nameservers for a record. Useful for
+# checking DNS propagation.
+
+if hostname -d >/dev/null 2>&1; then
+  DIGOPT=additional
+else
+  DIGOPT=answer
+fi
+
+MY_HOSTNAME=$(hostname)
+MY_DNSDOMAIN=${MY_HOSTNAME#*\.}
+
+for i in $(dig +noall +${DIGOPT} NS $MY_DNSDOMAIN | awk '{print $5}' | sort -t '.' -k1,1n -k2,2n -k3,3n -k4,4n);
+    do echo "$i: "; dig @$i +noall +answer "$@"
+done

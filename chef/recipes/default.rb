@@ -56,7 +56,11 @@ end
   package pkg
 end
 
+node.default['terraform']['version'] = '0.10.7'
+node.default['vagrant']['version'] = '2.0.0'
+
 include_recipe 'bartko_wants::awscli' if node['bartko_wants']['awscli']
 include_recipe 'bartko_wants::docker' if node['bartko_wants']['docker']
 include_recipe 'bartko_wants::plex' if node['bartko_wants']['plex']
-include_recipe 'bartko_wants::vagrant' if node['bartko_wants']['vagrant']
+include_recipe 'vagrant' if node['bartko_wants']['vagrant']
+include_recipe 'terraform' if node['bartko_wants']['terraform']

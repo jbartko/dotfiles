@@ -33,7 +33,18 @@ sslcomp() {
 
 # generate a new private key and signing request
 sslgen() {
-    openssl req -out $1-$(date +%Y%m%d).csr -new -newkey rsa:2048 -nodes -subj '/C=US/ST=Texas/L=Austin/O=Drilling Info, Inc./OU=Information Technology/CN=*.drillinginfo.com' -keyout $1-$(date +%Y%m%d).key
+  echo "DEBUG $OPENSSL_SUBJECT"
+    if [ -z "$OPENSSL_SUBJECT" ]; then
+      echo 'Please define $OPENSSL_SUBJECT, e.g.' >&2
+      echo '    OPENSSL_SUBJECT="/C=COUNTRY/ST=REGION/L=LOCALITY/O=ORGANIZATION/OU=UNIT/CN=subject.example.com"' >&2
+      return
+    elif [ "$#" -lt 1 ]; then
+      echo -e 'Usage:\n\tOPENSSL_SUBJECT=... sslgen subject.example.com' >&2
+      return
+    else
+      openssl req -out $1-$(date +%Y%m%d).csr -new -newkey rsa:2048 -nodes \
+        -subj "$OPENSSL_SUBJECT" -keyout $1-$(date +%Y%m%d).key
+    fi
 }
 
 # convert PKCS8INF -> RSA/PKCS1

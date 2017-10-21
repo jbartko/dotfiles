@@ -14,4 +14,6 @@ fresh bin --bin
 fresh config/gitconfig --file
 fresh bobthecow/git-flow-completion git-flow-completion.bash
 fresh config/tmux.conf --file
-fresh git://git.drillinginfo.com/ITAppSupport/.tmux.d.git . --file=~/.tmux.d/
+
+# example shared tmux directory
+#fresh git://host/repo/.tmux.d.git . --file=~/.tmux.d/

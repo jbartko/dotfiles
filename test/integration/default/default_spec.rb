@@ -104,9 +104,13 @@ control 'Packages' do
     end
   end
 
+  describe command('terraform -v') do
+    its('stdout') { should match '0.10.7' }
+  end
+
   describe package('vagrant') do
     it { should be_installed }
-    its('version') { should match '1.9.5' }
+    its('version') { should match '2.0.0' }
   end
 
   describe gem('lastpass-ssh', '/opt/chefdk/embedded/bin/gem') do

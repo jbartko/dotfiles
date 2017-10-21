@@ -5,6 +5,7 @@ depends 'apt'
 depends 'docker'
 depends 'poise-python'
 depends 'yum'
+depends 'terraform'
 depends 'vagrant'
 
 gem 'lastpass-ssh'
