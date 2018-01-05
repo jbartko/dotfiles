@@ -54,10 +54,7 @@ control 'Packages' do
     lsof
     ncdu
     nmap
-    python-cinderclient
-    python-keystoneclient
     python-openstackclient
-    python-pip
     remmina
     rsync
     strace
@@ -78,6 +75,9 @@ control 'Packages' do
       kernel-devel
       NetworkManager-openconnect
       nmap-ncat
+      python2-cinderclient
+      python2-keystoneclient
+      python2-pip
       vim-enhanced
       VirtualBox-5.1
     }.each do |pkg|
@@ -95,6 +95,9 @@ control 'Packages' do
       git-flow
       netcat
       network-manager-openconnect-gnome
+      python-cinderclient
+      python-keystoneclient
+      python-pip
       vim
       virtualbox-5.1
     }.each do |pkg|
@@ -105,35 +108,25 @@ control 'Packages' do
   end
 
   describe command('terraform -v') do
-    its('stdout') { should match '0.10.7' }
+    its('stdout') { should match '0.11.1' }
   end
 
   describe package('vagrant') do
     it { should be_installed }
-    its('version') { should match '2.0.0' }
-  end
-
-  describe gem('lastpass-ssh', '/opt/chefdk/embedded/bin/gem') do
-    it { should be_installed }
+    its('version') { should match '2.0.1' }
   end
 
   describe pip('awscli') do
     it { should be_installed }
   end
 
-  describe package('docker-engine') do
+  describe package('docker-ce') do
     it { should be_installed }
   end
 end
 
 control 'Services' do
   title 'Ensure services are running'
-
-  describe processes('ssh-agent') do
-    its('entries.length') { should eq 1 }
-    its('states') { should eq ['Ss'] }
-    its('users') { should eq ['vagrant'] }
-  end
 
   describe service('docker') do
     it { should be_running }

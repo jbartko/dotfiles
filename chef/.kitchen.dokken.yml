@@ -1,0 +1,52 @@
+---
+driver:
+  name: dokken
+  privileged: true
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  chef_omnibus_url: <%= ENV['SUT_CHEF_OMNIBUS_URL'] ||
+    'https://omnitruck.chef.io/install.sh' %>
+  http_proxy: <%= ENV['http_proxy'] || nil %>
+  https_proxy: <%= ENV['https_proxy'] || nil %>
+  no_proxy: <%= ENV['no_proxy'] || nil %>
+  require_chef_omnibus: <%= ENV['SUT_CHEF_VERSION'] || true %>
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: fedora-26
+    driver:
+      image: dokken/fedora-26
+      pid_one_command: /usr/lib/systemd/systemd
+    run_list:
+      - recipe[sudo]
+  - name: ubuntu-14.04
+    driver:
+      image: dokken/ubuntu-14.04
+      pid_one_command: /sbin/init
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-16.04
+    driver:
+      image: dokken/ubuntu-16.04
+      pid_one_command: /bin/systemd
+      run_list:
+        - recipe[apt]
+
+suites:
+  - name: default
+    run_list:
+      - recipe[jbartko_dotfiles_test]
+      - recipe[bartko_wants]
+    attributes:
+      bartko_wants:
+        awscli: true
+        docker: true
+        plex: true
+        terraform: true
+        vagrant: true

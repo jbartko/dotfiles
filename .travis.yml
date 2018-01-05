@@ -1,0 +1,24 @@
+rvm: 2.4
+
+services: docker
+
+sudo: required
+
+env:
+  global:
+    - KITCHEN_YAML=.kitchen.dokken.yml
+  matrix:
+    - INSTANCE=default-fedora-26
+    - INSTANCE=default-ubuntu-1404
+    - INSTANCE=default-ubuntu-1604
+
+before_install:
+- curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
+- cd ./chef
+
+install: chef exec bundle install --jobs=3 --retry=3
+
+before_script:
+- sudo iptables -L DOCKER || sudo iptables -N DOCKER
+
+script: travis_retry chef exec kitchen verify ${INSTANCE} -l debug

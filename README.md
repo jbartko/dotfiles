@@ -1,5 +1,7 @@
 # [fresh](https://freshshell.com/) ~/.dotfiles
 
+[![Build Status](https://travis-ci.org/jbartko/dotfiles.svg?branch=master)](https://travis-ci.org/jbartko/dotfiles)
+
 ## Why hello there
 You're probably here for [OpenSSL wrappers](bash/openssl-wrappers) or [Consul curl wrappers](bash/consul_curl). Add something like the following to your own `freshrc`:
 
@@ -21,9 +23,22 @@ source ~/.bashrc
 
 ## Testing
 
+### Vagrant
+
 ```sh
 chef exec bundle install
-time (kitchen converge -c $(echo $(grep -c proc /proc/cpuinfo)*2 | bc) && \
+time (kitchen converge -c && \
+    kitchen verify && \
+    kitchen destroy)
+```
+
+### Docker
+
+```sh
+chef exec bundle install
+cd ./chef
+export KITCHEN_YAML=.kitchen.dokken.yml
+time (kitchen converge -c && \
     kitchen verify && \
     kitchen destroy)
 ```

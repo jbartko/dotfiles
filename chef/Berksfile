@@ -7,3 +7,8 @@ cookbook 'docker'
 cookbook 'poise-python'
 cookbook 'yum'
 cookbook 'vagrant'
+
+group :integration do
+  cookbook 'jbartko_dotfiles_test', path: 'test/integration/cookbooks/jbartko_dotfiles_test'
+  cookbook 'sudo'   # required for Fedora 26
+end

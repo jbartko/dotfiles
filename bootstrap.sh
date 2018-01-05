@@ -7,7 +7,7 @@ echo 3 > /proc/sys/vm/drop_caches
 # Install git
 (
     grep -q Fedora /etc/*release* 2>/dev/null && \
-        (dnf makecache fast && dnf install -y git && dnf update -y vim*) || \
+        (dnf makecache && dnf install -y git && dnf update -y vim*) || \
         echo is not fedora
 ) | tee -a bootstrap.log
 

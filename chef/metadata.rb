@@ -7,5 +7,3 @@ depends 'poise-python'
 depends 'yum'
 depends 'terraform', '~> 1.0.2'
 depends 'vagrant'
-
-gem 'lastpass-ssh'
