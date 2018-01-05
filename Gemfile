@@ -1,3 +1,6 @@
-source 'https://rubygems.org' do
+source 'https://rubygems.org'
+
+group :integration do
   gem 'kitchen-sync'
+  gem 'kitchen-dokken'
 end
