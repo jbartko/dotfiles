@@ -8,12 +8,12 @@ env:
   global:
     - KITCHEN_YAML=.kitchen.dokken.yml
   matrix:
-    - INSTANCE=default-fedora-26
+    - INSTANCE=default-fedora-27
     - INSTANCE=default-ubuntu-1404
     - INSTANCE=default-ubuntu-1604
 
 before_install:
-- curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
+- curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk -v 2.4.17
 - cd ./chef
 
 install: chef exec bundle install --jobs=3 --retry=3
