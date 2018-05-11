@@ -28,7 +28,7 @@ su vagrant -c '
 # be not root, install Chef, converge
 su vagrant -c '
   source ~/.fresh/build/shell.sh
-  chef-workstation-bootstrap -j ~/.dotfiles/chef/dna.json
+  chef-workstation-bootstrap -j ~/.dotfiles/chef/dna.json -v 2.4.17
 '
 
 # probably don't care

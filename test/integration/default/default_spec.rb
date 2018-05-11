@@ -54,7 +54,6 @@ control 'Packages' do
     lsof
     ncdu
     nmap
-    python-openstackclient
     remmina
     rsync
     strace
@@ -77,6 +76,7 @@ control 'Packages' do
       nmap-ncat
       python2-cinderclient
       python2-keystoneclient
+      python2-openstackclient
       python2-pip
       vim-enhanced
       VirtualBox-5.1
@@ -97,6 +97,7 @@ control 'Packages' do
       network-manager-openconnect-gnome
       python-cinderclient
       python-keystoneclient
+      python-openstackclient
       python-pip
       vim
       virtualbox-5.1
@@ -107,13 +108,13 @@ control 'Packages' do
     end
   end
 
-  describe command('terraform -v') do
-    its('stdout') { should match '0.11.1' }
+  describe command('/usr/local/bin/terraform -v') do
+    its('stdout') { should match '0.11.7' }
   end
 
   describe package('vagrant') do
     it { should be_installed }
-    its('version') { should match '2.0.1' }
+    its('version') { should match '2.1.1' }
   end
 
   describe pip('awscli') do

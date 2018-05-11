@@ -3,6 +3,10 @@ package 'bzip2' do
   action :nothing
 end.run_action(:install)
 
+package 'sudo' do
+  action :nothing
+end.run_action(:install)
+
 include_recipe 'git'
 include_recipe 'chefdk'
 
